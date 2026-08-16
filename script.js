@@ -137,7 +137,24 @@ const importDataInput =
 const resetDataButton =
     $("reset-data-button");
 
+const notificationStatus =
+    $("notification-status");
 
+
+const notificationStatusDot =
+    $("notification-status-dot");
+
+
+const enableNotificationsButton =
+    $("enable-notifications-button");
+
+
+const testNotificationButton =
+    $("test-notification-button");
+
+
+const notificationHelp =
+    $("notification-help");
 
 const sheetBackdrop =
     $("sheet-backdrop");
@@ -5580,6 +5597,17 @@ function importData(
 // מאזיני אירועים
 // ==================================================
 
+enableNotificationsButton.addEventListener(
+    "click",
+    requestNotificationPermission
+);
+
+
+testNotificationButton.addEventListener(
+    "click",
+    showTestNotification
+);
+
 openRingActionsButton.addEventListener(
     "click",
     function () {
@@ -6263,9 +6291,275 @@ function registerServiceWorker() {
 }
 
 // ==================================================
+// Notifications
+// ==================================================
+
+function updateNotificationUI() {
+
+    notificationStatusDot.classList.remove(
+        "active",
+        "blocked"
+    );
+
+
+    /*
+     * הדפדפן לא תומך בהתראות.
+     */
+
+    if (
+        !(
+            "Notification"
+            in
+            window
+        )
+    ) {
+
+        notificationStatus.textContent =
+            "לא נתמך";
+
+
+        notificationHelp.textContent =
+            "המכשיר או הדפדפן הזה אינם תומכים בהתראות.";
+
+
+        enableNotificationsButton.hidden =
+            true;
+
+
+        testNotificationButton.hidden =
+            true;
+
+
+        return;
+    }
+
+
+
+    /*
+     * ניתנה הרשאה.
+     */
+
+    if (
+        Notification.permission ===
+        "granted"
+    ) {
+
+        notificationStatus.textContent =
+            "פעילות";
+
+
+        notificationStatusDot.classList.add(
+            "active"
+        );
+
+
+        enableNotificationsButton.hidden =
+            true;
+
+
+        testNotificationButton.hidden =
+            false;
+
+
+        notificationHelp.textContent =
+            "Ring Tracker מורשית להציג התראות במכשיר.";
+
+
+        return;
+    }
+
+
+
+    /*
+     * המשתמשת חסמה התראות.
+     */
+
+    if (
+        Notification.permission ===
+        "denied"
+    ) {
+
+        notificationStatus.textContent =
+            "חסומות";
+
+
+        notificationStatusDot.classList.add(
+            "blocked"
+        );
+
+
+        enableNotificationsButton.hidden =
+            true;
+
+
+        testNotificationButton.hidden =
+            true;
+
+
+        notificationHelp.textContent =
+            "ההתראות חסומות בהגדרות האייפון.";
+
+
+        return;
+    }
+
+
+
+    /*
+     * עדיין לא התבקש אישור.
+     */
+
+    notificationStatus.textContent =
+        "לא הופעלו";
+
+
+    enableNotificationsButton.hidden =
+        false;
+
+
+    testNotificationButton.hidden =
+        true;
+
+
+    notificationHelp.textContent =
+        "לחצי על הפעלת התראות כדי לאשר אותן באייפון.";
+}
+
+
+
+// ==================================================
+// בקשת הרשאה
+// ==================================================
+
+async function requestNotificationPermission() {
+
+    if (
+        !(
+            "Notification"
+            in
+            window
+        )
+    ) {
+
+        updateNotificationUI();
+
+        return;
+    }
+
+
+    try {
+
+        const permission =
+            await Notification
+                .requestPermission();
+
+
+        console.log(
+            "Notification permission:",
+            permission
+        );
+
+
+        updateNotificationUI();
+
+
+        /*
+         * אם ניתנה הרשאה,
+         * נציג מיד התראת ניסיון אחת.
+         */
+
+        if (
+            permission ===
+            "granted"
+        ) {
+
+            await showTestNotification();
+        }
+
+    } catch (
+        error
+    ) {
+
+        console.error(
+            "Notification permission error:",
+            error
+        );
+
+
+        notificationHelp.textContent =
+            "לא הצלחנו לבקש הרשאת התראות.";
+    }
+}
+
+
+
+// ==================================================
+// התראת ניסיון
+// ==================================================
+
+async function showTestNotification() {
+
+    if (
+        Notification.permission !==
+        "granted"
+    ) {
+
+        return;
+    }
+
+
+    try {
+
+        const registration =
+            await navigator
+                .serviceWorker
+                .ready;
+
+
+        await registration
+            .showNotification(
+                "Ring Tracker",
+                {
+                    body:
+                        "ההתראות פועלות בהצלחה ✓",
+
+                    icon:
+                        "./apple-touch-icon.png",
+
+                    badge:
+                        "./apple-touch-icon.png",
+
+                    tag:
+                        "ring-tracker-test",
+
+                    data: {
+                        url:
+                            "./"
+                    }
+                }
+            );
+
+    } catch (
+        error
+    ) {
+
+        console.error(
+            "Test notification error:",
+            error
+        );
+
+
+        notificationHelp.textContent =
+            "לא הצלחנו להציג את התראת הניסיון.";
+    }
+}
+
+// ==================================================
 // התחלה
 // ==================================================
 
 registerServiceWorker();
 
 refreshApp();
+
+updateNotificationUI();
