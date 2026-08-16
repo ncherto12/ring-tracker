@@ -1,0 +1,1730 @@
+:root {
+    --background: #f7f6f8;
+    --surface: #ffffff;
+
+    --text: #1f2030;
+    --muted: #777b89;
+    --soft: #ececf0;
+
+    --ring-main: #6d75d8;
+    --ring-progress: #505bd0;
+    --ring-soft: #dfe2fb;
+
+    --break-main: #d7c8e8;
+    --break-progress: #aa86c7;
+    --break-soft: #f0eaf6;
+
+    --bleeding: #d86f87;
+
+    --warning: #d58b3f;
+    --important: #c95650;
+
+    --radius-large: 24px;
+    --radius-medium: 18px;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+
+html {
+    background: var(--background);
+}
+
+
+body {
+    margin: 0;
+
+    background: var(--background);
+
+    color: var(--text);
+
+    font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+
+button,
+input {
+    font: inherit;
+}
+
+
+button {
+    cursor: pointer;
+}
+
+
+button:active {
+    transform: scale(0.985);
+}
+
+
+.app {
+    width: 100%;
+    max-width: 430px;
+
+    margin: 0 auto;
+
+    padding:
+        calc(20px + env(safe-area-inset-top))
+        16px
+        calc(105px + env(safe-area-inset-bottom));
+}
+
+
+
+/* ==================================================
+   כותרת
+================================================== */
+
+.app-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 20px;
+}
+
+
+.app-header h1 {
+    margin: 2px 0 0;
+
+    font-size: 27px;
+    line-height: 1.1;
+}
+
+
+.eyebrow,
+.section-kicker {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    font-weight: 650;
+}
+
+
+.icon-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: var(--soft);
+
+    color: var(--text);
+
+    font-size: 20px;
+}
+
+
+
+/* ==================================================
+   מסכים
+================================================== */
+
+.tab-content {
+    display: none;
+}
+
+
+.tab-content.active {
+    display: block;
+}
+
+
+
+/* ==================================================
+   העיגול
+================================================== */
+
+.cycle-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    padding-top: 4px;
+
+    margin-bottom: 20px;
+}
+
+
+.cycle-ring-shell {
+    position: relative;
+
+    width: min(82vw, 330px);
+    aspect-ratio: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    transition:
+        box-shadow 0.25s ease;
+}
+
+
+.cycle-ring-shell.attention {
+    box-shadow:
+        0 0 0 12px
+        rgba(213, 139, 63, 0.08);
+}
+
+
+.cycle-ring-shell.important {
+    box-shadow:
+        0 0 0 12px
+        rgba(201, 86, 80, 0.09);
+}
+
+
+
+/*
+ * כל המסלול מצויר בשכבה אחת.
+ * JavaScript משנה את ה-gradient
+ * בהתאם ליום הנוכחי.
+ */
+
+.cycle-ring {
+    position: relative;
+
+    width: 100%;
+    height: 100%;
+
+    border-radius: 50%;
+
+    background:
+        conic-gradient(
+            from -90deg,
+
+            var(--ring-soft)
+            0deg
+            268deg,
+
+            transparent
+            268deg
+            272deg,
+
+            var(--break-soft)
+            272deg
+            358deg,
+
+            transparent
+            358deg
+            360deg
+        );
+
+    box-shadow:
+        0 12px 35px
+        rgba(41, 42, 62, 0.07);
+}
+
+
+.cycle-ring::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 17px;
+
+    border-radius: 50%;
+
+    background: var(--background);
+
+    z-index: 1;
+}
+
+
+.cycle-ring::after {
+    content: "";
+
+    position: absolute;
+
+    inset: 32px;
+
+    border-radius: 50%;
+
+    background: var(--surface);
+
+    z-index: 3;
+
+    box-shadow:
+        0 5px 22px
+        rgba(41, 42, 62, 0.045);
+}
+
+
+
+/* ==================================================
+   תוכן במרכז
+================================================== */
+
+.cycle-ring-center {
+    position: absolute;
+
+    inset: 55px;
+
+    z-index: 5;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+}
+
+
+.cycle-status {
+    margin:
+        0
+        0
+        5px;
+
+    color: var(--ring-main);
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.cycle-day-number {
+    font-size: 67px;
+    line-height: 0.95;
+
+    font-weight: 500;
+
+    letter-spacing: -0.05em;
+}
+
+
+.cycle-day-label {
+    margin:
+        8px
+        0
+        0;
+
+    color: var(--muted);
+
+    font-size: 13px;
+}
+
+
+.cycle-countdown {
+    max-width: 180px;
+
+    margin:
+        13px
+        0
+        0;
+
+    font-size: 15px;
+    font-weight: 650;
+    line-height: 1.35;
+}
+
+
+
+/* ==================================================
+   נקודת היום
+================================================== */
+
+.cycle-current-marker {
+    position: absolute;
+
+    z-index: 9;
+
+    width: 17px;
+    height: 17px;
+
+    border:
+        4px solid
+        var(--surface);
+
+    border-radius: 50%;
+
+    background: var(--text);
+
+    box-shadow:
+        0 2px 8px
+        rgba(0, 0, 0, 0.18);
+
+    transform:
+        translate(-50%, -50%);
+
+    transition:
+        left 0.3s ease,
+        top 0.3s ease;
+}
+
+
+.cycle-current-marker[hidden] {
+    display: none;
+}
+
+
+
+/* ==================================================
+   חריגות
+================================================== */
+
+.cycle-markers {
+    position: absolute;
+
+    inset: 0;
+
+    z-index: 8;
+
+    pointer-events: none;
+}
+
+
+.cycle-anomaly-marker {
+    position: absolute;
+
+    width: 13px;
+    height: 13px;
+
+    transform:
+        translate(-50%, -50%);
+
+    border:
+        3px solid
+        var(--surface);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 2px 6px
+        rgba(0, 0, 0, 0.16);
+}
+
+
+.cycle-anomaly-marker.warning {
+    background: var(--warning);
+}
+
+
+.cycle-anomaly-marker.important {
+    width: 15px;
+    height: 15px;
+
+    background: var(--important);
+}
+
+
+.cycle-anomaly-marker.deviation {
+    background: #9b78bf;
+}
+
+
+
+/* ==================================================
+   מקרא
+================================================== */
+
+.cycle-legend {
+    display: flex;
+
+    gap: 18px;
+
+    margin-top: 9px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+.cycle-legend-item {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.cycle-legend-dot,
+.legend-dot {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 50%;
+}
+
+
+.cycle-legend-dot.ring,
+.legend-dot.ring {
+    background: var(--ring-main);
+}
+
+
+.cycle-legend-dot.break,
+.legend-dot.break {
+    background: var(--break-main);
+}
+
+
+
+/* ==================================================
+   כפתורי טבעת ודימום
+================================================== */
+
+.main-actions {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+
+    margin-bottom: 18px;
+}
+
+
+.main-action-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    min-height: 54px;
+
+    border:
+        1px solid
+        #e4e4e8;
+
+    border-radius: 17px;
+
+    background: var(--surface);
+
+    color: var(--text);
+
+    font-size: 15px;
+    font-weight: 700;
+
+    box-shadow:
+        0 3px 12px
+        rgba(35, 36, 52, 0.04);
+}
+
+
+.main-action-icon {
+    font-size: 18px;
+}
+
+
+
+/* ==================================================
+   אזהרות
+================================================== */
+
+.medical-alerts-card {
+    margin-bottom: 18px;
+
+    padding: 16px;
+
+    border-radius: var(--radius-medium);
+
+    background: var(--surface);
+
+    box-shadow:
+        0 3px 14px
+        rgba(35, 36, 52, 0.04);
+}
+
+
+.medical-alert {
+    margin-top: 8px;
+
+    border-radius: 14px;
+
+    overflow: hidden;
+}
+
+
+.medical-alert.warning {
+    background: #fff5e8;
+}
+
+
+.medical-alert.important {
+    background: #fff0ef;
+}
+
+
+.medical-alert.info {
+    background: #f0f3fa;
+}
+
+
+.medical-alert summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    cursor: pointer;
+
+    list-style: none;
+}
+
+
+.medical-alert summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.medical-alert-title {
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.medical-alert-link {
+    margin-top: 2px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.medical-alert-body {
+    padding:
+        0
+        12px
+        12px;
+
+    color: #555966;
+
+    font-size: 12px;
+    line-height: 1.55;
+}
+
+
+
+/* ==================================================
+   Insights
+================================================== */
+
+.insights-section {
+    margin-top: 2px;
+}
+
+
+.insights-section h2 {
+    margin:
+        0
+        0
+        10px;
+
+    font-size: 18px;
+}
+
+
+.insights-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(2, 1fr);
+
+    gap: 10px;
+}
+
+
+.insights-grid.single {
+    grid-template-columns: 1fr;
+}
+
+
+.insight-card {
+    min-height: 122px;
+
+    padding: 15px;
+
+    border:
+        1px solid
+        #e7e7ea;
+
+    border-radius: 19px;
+
+    background: var(--surface);
+
+    box-shadow:
+        0 3px 12px
+        rgba(35, 36, 52, 0.035);
+}
+
+
+.insight-header {
+    display: flex;
+    align-items: center;
+
+    gap: 7px;
+
+    margin-bottom: 17px;
+
+    font-size: 11px;
+    font-weight: 700;
+}
+
+
+.insight-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 26px;
+    height: 26px;
+
+    border-radius: 50%;
+
+    background: #f0f1f6;
+
+    font-size: 12px;
+}
+
+
+.insight-icon.bleeding {
+    color: var(--bleeding);
+
+    background: #faedf0;
+}
+
+
+.insight-value {
+    display: block;
+
+    font-size: 14px;
+    line-height: 1.35;
+}
+
+
+.insight-detail {
+    margin:
+        5px
+        0
+        0;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.4;
+}
+
+
+
+/* ==================================================
+   לוח שנה
+================================================== */
+
+.calendar-card,
+.calendar-day-details,
+.history-card,
+.settings-card {
+    background: var(--surface);
+
+    border-radius: var(--radius-large);
+
+    box-shadow:
+        0 3px 15px
+        rgba(35, 36, 52, 0.04);
+}
+
+
+.calendar-card {
+    padding: 18px;
+}
+
+
+.calendar-header {
+    display: grid;
+
+    grid-template-columns:
+        40px
+        1fr
+        40px;
+
+    align-items: center;
+
+    gap: 8px;
+
+    margin-bottom: 15px;
+
+    text-align: center;
+}
+
+
+.calendar-header h2 {
+    margin:
+        2px
+        0
+        0;
+
+    font-size: 19px;
+}
+
+
+.calendar-nav-button {
+    width: 40px;
+    height: 40px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #f1f1f4;
+
+    font-size: 24px;
+}
+
+
+.calendar-weekdays,
+.calendar-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(7, 1fr);
+}
+
+
+.calendar-weekdays {
+    margin-bottom: 5px;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 10px;
+    font-weight: 650;
+}
+
+
+.calendar-weekdays div {
+    padding: 6px 0;
+}
+
+
+.calendar-grid {
+    gap: 4px;
+}
+
+
+.calendar-day {
+    position: relative;
+
+    min-height: 49px;
+
+    padding: 6px 2px;
+
+    border:
+        1px solid
+        transparent;
+
+    border-radius: 10px;
+
+    background: #fafafa;
+
+    text-align: center;
+
+    cursor: pointer;
+}
+
+
+.calendar-day.empty {
+    background: transparent;
+
+    cursor: default;
+}
+
+
+.calendar-day.ring-day {
+    background: #f0f2fd;
+}
+
+
+.calendar-day.break-day {
+    background: #f4eff8;
+}
+
+
+.calendar-day.today {
+    border-color: var(--text);
+}
+
+
+.calendar-day.selected {
+    box-shadow:
+        inset
+        0
+        0
+        0
+        2px
+        rgba(31, 32, 48, 0.13);
+}
+
+
+.calendar-day-number {
+    font-size: 12px;
+    font-weight: 650;
+}
+
+
+.calendar-markers {
+    position: absolute;
+
+    left: 3px;
+    right: 3px;
+    bottom: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 2px;
+}
+
+
+.calendar-marker {
+    font-size: 8px;
+    font-weight: 700;
+}
+
+
+.calendar-marker.bleeding {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 50%;
+
+    background: var(--bleeding);
+}
+
+
+.calendar-marker.predicted-bleeding {
+    width: 7px;
+    height: 7px;
+
+    border:
+        2px solid
+        var(--bleeding);
+
+    border-radius: 50%;
+
+    background: transparent;
+}
+
+
+.calendar-marker.warning {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: var(--important);
+
+    color: #ffffff;
+
+    font-size: 8px;
+}
+
+
+.calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+
+    gap:
+        8px
+        12px;
+
+    margin-top: 15px;
+
+    padding-top: 13px;
+
+    border-top:
+        1px solid
+        var(--soft);
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.calendar-legend > div {
+    display: flex;
+    align-items: center;
+
+    gap: 5px;
+}
+
+
+.legend-dot.bleeding {
+    background: var(--bleeding);
+}
+
+
+.legend-dot.predicted {
+    border:
+        2px solid
+        var(--bleeding);
+
+    background: transparent;
+}
+
+
+.legend-warning {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: var(--important);
+
+    color: #ffffff;
+
+    font-size: 8px;
+    font-weight: 700;
+}
+
+
+
+/* ==================================================
+   פרטי יום
+================================================== */
+
+.calendar-day-details {
+    margin-top: 12px;
+
+    padding: 17px;
+}
+
+
+.calendar-day-details h3 {
+    margin:
+        3px
+        0
+        13px;
+
+    font-size: 16px;
+}
+
+
+.calendar-day-summary {
+    display: flex;
+    flex-direction: column;
+
+    gap: 6px;
+
+    margin-bottom: 12px;
+}
+
+
+.calendar-summary-row {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    padding: 8px 9px;
+
+    border-radius: 9px;
+
+    background: #f7f7f8;
+
+    font-size: 11px;
+}
+
+
+.calendar-summary-row span {
+    color: var(--muted);
+}
+
+
+.calendar-selected-events {
+    border-top:
+        1px solid
+        var(--soft);
+
+    padding-top: 8px;
+}
+
+
+.calendar-event-item {
+    padding:
+        9px
+        0;
+
+    border-bottom:
+        1px solid
+        var(--soft);
+
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+
+.empty-message {
+    margin: 0;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+
+/* ==================================================
+   היסטוריה
+================================================== */
+
+.history-card {
+    padding: 18px;
+}
+
+
+.history-heading h2 {
+    margin:
+        2px
+        0
+        14px;
+
+    font-size: 20px;
+}
+
+
+.cycle-card {
+    margin-bottom: 9px;
+
+    border:
+        1px solid
+        #e8e8eb;
+
+    border-radius: 15px;
+
+    overflow: hidden;
+}
+
+
+.cycle-card summary {
+    padding: 13px;
+
+    list-style: none;
+
+    cursor: pointer;
+}
+
+
+.cycle-card summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.cycle-summary-main {
+    display: flex;
+    justify-content: space-between;
+
+    gap: 10px;
+
+    font-size: 13px;
+    font-weight: 700;
+}
+
+
+.cycle-summary-date {
+    margin-top: 3px;
+
+    color: var(--muted);
+
+    font-size: 10px;
+}
+
+
+.cycle-events {
+    padding:
+        0
+        13px
+        12px;
+
+    border-top:
+        1px solid
+        var(--soft);
+}
+
+
+.history-event {
+    padding:
+        9px
+        0;
+
+    border-bottom:
+        1px solid
+        var(--soft);
+
+    font-size: 11px;
+    line-height: 1.5;
+}
+
+
+.history-event:last-child {
+    border-bottom: none;
+}
+
+
+.history-actions {
+    display: flex;
+
+    gap: 6px;
+
+    margin-top: 6px;
+}
+
+
+.history-action-button {
+    padding:
+        5px
+        8px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #eeeeef;
+
+    color: #565966;
+
+    font-size: 10px;
+}
+
+
+.history-action-button.delete {
+    background: #fff0ef;
+
+    color: #a5443d;
+}
+
+
+
+/* ==================================================
+   הגדרות
+================================================== */
+
+.settings-header {
+    display: flex;
+    align-items: center;
+
+    gap: 12px;
+
+    margin-bottom: 14px;
+}
+
+
+.settings-header h2 {
+    margin: 2px 0 0;
+}
+
+
+.back-button {
+    padding:
+        8px
+        10px;
+
+    border: none;
+    border-radius: 11px;
+
+    background: var(--soft);
+
+    color: var(--text);
+
+    font-size: 12px;
+}
+
+
+.settings-card {
+    margin-bottom: 12px;
+
+    padding: 17px;
+}
+
+
+.settings-card h3 {
+    margin:
+        0
+        0
+        6px;
+
+    font-size: 15px;
+}
+
+
+.settings-card p {
+    margin:
+        0
+        0
+        12px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+    line-height: 1.55;
+}
+
+
+.settings-action-button,
+.danger-button {
+    width: 100%;
+
+    margin-top: 7px;
+
+    padding: 12px;
+
+    border: none;
+    border-radius: 12px;
+
+    font-size: 13px;
+    font-weight: 650;
+}
+
+
+.settings-action-button {
+    background: #efeff2;
+
+    color: var(--text);
+}
+
+
+.danger-card {
+    margin-top: 22px;
+}
+
+
+.danger-button {
+    background: #fff0ef;
+
+    color: #a5443d;
+}
+
+
+
+/* ==================================================
+   ניווט תחתון
+================================================== */
+
+.bottom-nav {
+    position: fixed;
+
+    left: 50%;
+    bottom: 0;
+
+    z-index: 50;
+
+    width: 100%;
+    max-width: 430px;
+
+    transform:
+        translateX(-50%);
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    padding:
+        8px
+        12px
+        calc(
+            8px +
+            env(safe-area-inset-bottom)
+        );
+
+    border-top:
+        1px solid
+        rgba(210, 210, 216, 0.85);
+
+    background:
+        rgba(250, 250, 251, 0.94);
+
+    backdrop-filter:
+        blur(18px);
+
+    -webkit-backdrop-filter:
+        blur(18px);
+}
+
+
+.bottom-nav-button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    gap: 2px;
+
+    padding: 4px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #848793;
+
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+.bottom-nav-button.active {
+    color: var(--ring-main);
+}
+
+
+.bottom-nav-icon {
+    font-size: 21px;
+    line-height: 1;
+}
+
+
+
+/* ==================================================
+   חלונית תחתונה
+================================================== */
+
+.sheet-backdrop {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 100;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+
+    padding: 12px;
+
+    background:
+        rgba(16, 17, 24, 0.28);
+
+    backdrop-filter:
+        blur(3px);
+
+    -webkit-backdrop-filter:
+        blur(3px);
+}
+
+
+.sheet-backdrop[hidden] {
+    display: none;
+}
+
+
+.action-sheet {
+    width: 100%;
+    max-width: 430px;
+
+    padding:
+        8px
+        16px
+        calc(
+            18px +
+            env(safe-area-inset-bottom)
+        );
+
+    border-radius:
+        25px
+        25px
+        18px
+        18px;
+
+    background: var(--surface);
+
+    box-shadow:
+        0 -8px 40px
+        rgba(0, 0, 0, 0.14);
+
+    animation:
+        sheet-up
+        0.18s ease-out;
+}
+
+
+@keyframes sheet-up {
+
+    from {
+        transform:
+            translateY(30px);
+
+        opacity: 0;
+    }
+
+    to {
+        transform:
+            translateY(0);
+
+        opacity: 1;
+    }
+}
+
+
+.sheet-handle {
+    width: 38px;
+    height: 4px;
+
+    margin:
+        0
+        auto
+        11px;
+
+    border-radius: 100px;
+
+    background: #d6d6da;
+}
+
+
+.sheet-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 14px;
+}
+
+
+.sheet-header h2 {
+    margin: 0;
+
+    font-size: 19px;
+}
+
+
+.sheet-close-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: none;
+    border-radius: 50%;
+
+    background: #efeff1;
+
+    color: #60636e;
+
+    font-size: 21px;
+}
+
+
+.sheet-primary-action,
+.sheet-secondary-action {
+    width: 100%;
+
+    margin-bottom: 8px;
+
+    padding: 13px 14px;
+
+    border: none;
+    border-radius: 14px;
+
+    font-size: 14px;
+    font-weight: 650;
+}
+
+
+.sheet-primary-action {
+    background: var(--text);
+
+    color: #ffffff;
+}
+
+
+.sheet-secondary-action {
+    background: #efeff2;
+
+    color: var(--text);
+}
+
+
+.sheet-text-button {
+    width: 100%;
+
+    padding: 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: var(--muted);
+
+    font-size: 12px;
+}
+
+
+.sheet-time-details {
+    margin-top: 5px;
+
+    text-align: center;
+}
+
+
+.sheet-time-details summary {
+    cursor: pointer;
+
+    list-style: none;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+.sheet-time-details summary::-webkit-details-marker {
+    display: none;
+}
+
+
+.sheet-time-details input {
+    width: 100%;
+
+    margin-top: 10px;
+
+    padding: 10px;
+
+    border:
+        1px solid
+        #dedee2;
+
+    border-radius: 11px;
+
+    background: #fafafa;
+}
+
+
+.sheet-question {
+    margin:
+        2px
+        0
+        13px;
+
+    font-size: 15px;
+    font-weight: 700;
+}
+
+
+.sheet-field {
+    display: block;
+
+    margin:
+        8px
+        0
+        5px;
+
+    color: var(--muted);
+
+    font-size: 11px;
+}
+
+
+.sheet-field-input {
+    width: 100%;
+
+    margin-bottom: 10px;
+
+    padding: 11px;
+
+    border:
+        1px solid
+        #dedee2;
+
+    border-radius: 11px;
+
+    background: #ffffff;
+}
+
+
+.sheet-status-text {
+    margin:
+        7px
+        0
+        0;
+
+    color: var(--muted);
+
+    text-align: center;
+
+    font-size: 11px;
+}
+
+
+
+/* ==================================================
+   מסכים קטנים
+================================================== */
+
+@media
+(max-width: 360px) {
+
+    .app {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+
+    .cycle-ring-shell {
+        width: min(84vw, 300px);
+    }
+
+
+    .cycle-day-number {
+        font-size: 58px;
+    }
+
+
+    .cycle-ring-center {
+        inset: 50px;
+    }
+
+
+    .calendar-day {
+        min-height: 45px;
+    }
+
+
+    .calendar-grid {
+        gap: 3px;
+    }
+
+}
