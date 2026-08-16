@@ -1,0 +1,954 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    >
+
+    <title>Ring Tracker</title>
+
+    <link
+    rel="apple-touch-icon"
+    sizes="180x180"
+    href="./apple-touch-icon.png"
+>
+
+<meta
+    name="theme-color"
+    content="#f7f6f8"
+>
+
+<meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+>
+
+<meta
+    name="apple-mobile-web-app-title"
+    content="Ring Tracker"
+>
+
+<link
+    rel="apple-touch-icon"
+    href="./icons/icon-180.png"
+>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+</head>
+
+
+<body>
+
+<main class="app">
+
+
+    <!-- ==================================================
+         כותרת
+    =================================================== -->
+
+    <header class="app-header">
+
+        <div>
+            <p class="eyebrow">
+                Ring Tracker
+            </p>
+
+            <h1>
+                המעקב שלי
+            </h1>
+        </div>
+
+
+        <button
+            id="settings-button"
+            class="icon-button"
+            aria-label="הגדרות"
+        >
+            ⚙︎
+        </button>
+
+    </header>
+
+
+
+    <!-- ==================================================
+         היום
+    =================================================== -->
+
+    <section
+        id="tab-today"
+        class="tab-content active"
+    >
+
+
+        <!-- ==============================================
+             העיגול המרכזי
+        =============================================== -->
+
+        <section class="cycle-hero">
+
+            <div
+                id="cycle-ring-shell"
+                class="cycle-ring-shell"
+            >
+
+                <div
+                    id="cycle-ring"
+                    class="cycle-ring"
+                >
+
+                    <div
+                        id="cycle-markers"
+                        class="cycle-markers"
+                    ></div>
+
+
+                    <div
+                        id="cycle-current-marker"
+                        class="cycle-current-marker"
+                    ></div>
+
+
+                    <div class="cycle-ring-center">
+
+                        <p
+                            id="cycle-status"
+                            class="cycle-status"
+                        >
+                            אין מחזור פעיל
+                        </p>
+
+
+                        <div
+                            id="cycle-day-number"
+                            class="cycle-day-number"
+                        >
+                            —
+                        </div>
+
+
+                        <p
+                            id="cycle-day-label"
+                            class="cycle-day-label"
+                        >
+                            —
+                        </p>
+
+
+                        <p
+                            id="cycle-countdown"
+                            class="cycle-countdown"
+                        >
+                            הכניסי טבעת כדי להתחיל
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <div class="cycle-legend">
+
+                <div class="cycle-legend-item">
+                    <span class="cycle-legend-dot ring"></span>
+                    21 ימים טבעת
+                </div>
+
+                <div class="cycle-legend-item">
+                    <span class="cycle-legend-dot break"></span>
+                    7 ימי הפסקה
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ==============================================
+             פעולות
+        =============================================== -->
+
+        <section class="main-actions">
+
+            <button
+                id="open-ring-actions"
+                class="main-action-button"
+            >
+
+                <span class="main-action-icon">
+                    💍
+                </span>
+
+                <span>
+                    טבעת
+                </span>
+
+            </button>
+
+
+            <button
+                id="open-bleeding-actions"
+                class="main-action-button"
+            >
+
+                <span class="main-action-icon">
+                    🩸
+                </span>
+
+                <span>
+                    דימום
+                </span>
+
+            </button>
+
+        </section>
+
+
+
+        <!-- ==============================================
+             אזהרות
+        =============================================== -->
+
+        <section
+            id="medical-alerts-card"
+            class="medical-alerts-card"
+            hidden
+        >
+
+            <p class="section-kicker">
+                תשומת לב
+            </p>
+
+            <div id="medical-alerts-list"></div>
+
+        </section>
+
+
+
+        <!-- ==============================================
+             מידע מהיר
+        =============================================== -->
+
+        <section class="insights-section">
+
+            <h2>
+                במבט אחד
+            </h2>
+
+
+            <div
+                id="insights-grid"
+                class="insights-grid"
+            >
+
+
+                <article class="insight-card">
+
+                    <div class="insight-header">
+
+                        <span class="insight-icon">
+                            ◷
+                        </span>
+
+                        <span>
+                            הפעולה הבאה
+                        </span>
+
+                    </div>
+
+
+                    <strong
+                        id="next-action-name"
+                        class="insight-value"
+                    >
+                        —
+                    </strong>
+
+
+                    <p
+                        id="next-action-date"
+                        class="insight-detail"
+                    >
+                        —
+                    </p>
+
+                </article>
+
+
+
+                <article
+                    id="bleeding-prediction-card"
+                    class="insight-card"
+                    hidden
+                >
+
+                    <div class="insight-header">
+
+                        <span class="insight-icon bleeding">
+                            ●
+                        </span>
+
+                        <span>
+                            דימום צפוי
+                        </span>
+
+                    </div>
+
+
+                    <strong
+                        id="bleeding-prediction-date"
+                        class="insight-value"
+                    >
+                        —
+                    </strong>
+
+
+                    <p
+                        id="bleeding-prediction-basis"
+                        class="insight-detail"
+                    >
+                        —
+                    </p>
+
+                </article>
+
+
+            </div>
+
+        </section>
+
+
+    </section>
+
+
+
+    <!-- ==================================================
+         לוח שנה
+    =================================================== -->
+
+    <section
+        id="tab-calendar"
+        class="tab-content"
+    >
+
+        <section class="calendar-card">
+
+            <div class="calendar-header">
+
+                <button
+                    id="calendar-prev-button"
+                    class="calendar-nav-button"
+                    aria-label="חודש קודם"
+                >
+                    ‹
+                </button>
+
+
+                <div>
+
+                    <p class="section-kicker">
+                        לוח שנה
+                    </p>
+
+                    <h2 id="calendar-month-title">
+                        —
+                    </h2>
+
+                </div>
+
+
+                <button
+                    id="calendar-next-button"
+                    class="calendar-nav-button"
+                    aria-label="חודש הבא"
+                >
+                    ›
+                </button>
+
+            </div>
+
+
+
+            <div class="calendar-weekdays">
+
+                <div>א׳</div>
+                <div>ב׳</div>
+                <div>ג׳</div>
+                <div>ד׳</div>
+                <div>ה׳</div>
+                <div>ו׳</div>
+                <div>ש׳</div>
+
+            </div>
+
+
+
+            <div
+                id="calendar-grid"
+                class="calendar-grid"
+            ></div>
+
+
+
+            <div class="calendar-legend">
+
+                <div>
+                    <span class="legend-dot ring"></span>
+                    טבעת
+                </div>
+
+                <div>
+                    <span class="legend-dot break"></span>
+                    הפסקה
+                </div>
+
+                <div>
+                    <span class="legend-dot bleeding"></span>
+                    דימום
+                </div>
+
+                <div>
+                    <span class="legend-dot predicted"></span>
+                    דימום צפוי
+                </div>
+
+                <div>
+                    <span class="legend-warning">!</span>
+                    חריגה
+                </div>
+
+            </div>
+
+        </section>
+
+
+
+        <section class="calendar-day-details">
+
+            <p class="section-kicker">
+                פרטי יום
+            </p>
+
+            <h3 id="calendar-selected-date">
+                בחרי יום בלוח השנה
+            </h3>
+
+
+            <div
+                id="calendar-day-summary"
+                class="calendar-day-summary"
+            ></div>
+
+
+            <div
+                id="calendar-selected-events"
+                class="calendar-selected-events"
+            ></div>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         היסטוריה
+    =================================================== -->
+
+    <section
+        id="tab-history"
+        class="tab-content"
+    >
+
+        <section class="history-card">
+
+            <div class="history-heading">
+
+                <p class="section-kicker">
+                    מעקב
+                </p>
+
+                <h2>
+                    מחזורים
+                </h2>
+
+            </div>
+
+
+            <div id="history-list">
+
+                <p class="empty-message">
+                    עדיין אין מחזורים
+                </p>
+
+            </div>
+
+        </section>
+
+    </section>
+
+
+
+    <!-- ==================================================
+         הגדרות
+    =================================================== -->
+
+    <section
+        id="tab-settings"
+        class="tab-content"
+    >
+
+        <div class="settings-header">
+
+            <button
+                id="settings-back-button"
+                class="back-button"
+            >
+                ‹ חזרה
+            </button>
+
+
+            <div>
+
+                <p class="section-kicker">
+                    Ring Tracker
+                </p>
+
+                <h2>
+                    הגדרות
+                </h2>
+
+            </div>
+
+        </div>
+
+
+
+        <section class="settings-card">
+
+            <h3>
+                נתונים וגיבוי
+            </h3>
+
+            <p>
+                שמירת עותק של היסטוריית המעקב
+                או שחזור גיבוי קיים.
+            </p>
+
+
+            <button
+                id="export-data-button"
+                class="settings-action-button"
+            >
+                ייצוא גיבוי
+            </button>
+
+
+            <button
+                id="import-data-button"
+                class="settings-action-button"
+            >
+                ייבוא גיבוי
+            </button>
+
+
+            <input
+                id="import-data-input"
+                type="file"
+                accept=".json,application/json"
+                hidden
+            >
+
+        </section>
+
+
+
+        <section class="settings-card">
+
+            <h3>
+                ניבוי דימום
+            </h3>
+
+            <p id="prediction-settings-summary">
+                האפליקציה עדיין אוספת נתונים.
+            </p>
+
+        </section>
+
+
+
+        <section class="settings-card">
+
+            <h3>
+                מידע רפואי
+            </h3>
+
+            <p>
+                האפליקציה יכולה לזהות חריגות
+                מסוימות לפי הנתונים שהוזנו.
+                היא אינה מחליפה ייעוץ רפואי אישי.
+            </p>
+
+        </section>
+
+
+
+        <section class="settings-card danger-card">
+
+            <h3>
+                איפוס
+            </h3>
+
+            <p>
+                מחיקת כל היסטוריית המעקב
+                מהמכשיר.
+            </p>
+
+
+            <button
+                id="reset-data-button"
+                class="danger-button"
+            >
+                איפוס כל הנתונים
+            </button>
+
+        </section>
+
+    </section>
+
+
+</main>
+
+
+
+<!-- ==================================================
+     ניווט תחתון
+=================================================== -->
+
+<nav
+    id="bottom-nav"
+    class="bottom-nav"
+>
+
+    <button
+        class="bottom-nav-button active"
+        data-tab="today"
+    >
+
+        <span class="bottom-nav-icon">
+            ⌂
+        </span>
+
+        <span>
+            היום
+        </span>
+
+    </button>
+
+
+    <button
+        class="bottom-nav-button"
+        data-tab="calendar"
+    >
+
+        <span class="bottom-nav-icon">
+            □
+        </span>
+
+        <span>
+            לוח שנה
+        </span>
+
+    </button>
+
+
+    <button
+        class="bottom-nav-button"
+        data-tab="history"
+    >
+
+        <span class="bottom-nav-icon">
+            ≡
+        </span>
+
+        <span>
+            היסטוריה
+        </span>
+
+    </button>
+
+</nav>
+
+
+
+<!-- ==================================================
+     חלונית תחתונה
+=================================================== -->
+
+<div
+    id="sheet-backdrop"
+    class="sheet-backdrop"
+    hidden
+>
+
+    <section
+        id="action-sheet"
+        class="action-sheet"
+    >
+
+        <div class="sheet-handle"></div>
+
+
+        <div class="sheet-header">
+
+            <h2 id="sheet-title">
+                פעולה
+            </h2>
+
+
+            <button
+                id="close-sheet-button"
+                class="sheet-close-button"
+                aria-label="סגירה"
+            >
+                ×
+            </button>
+
+        </div>
+
+
+
+        <!-- טבעת -->
+
+        <div
+            id="ring-sheet"
+            class="sheet-content"
+            hidden
+        >
+
+            <div id="ring-default-actions">
+
+                <button
+                    id="sheet-insert-button"
+                    class="sheet-primary-action"
+                >
+                    💍 הכנסתי טבעת
+                </button>
+
+
+                <button
+                    id="sheet-remove-button"
+                    class="sheet-primary-action"
+                >
+                    ○ הוצאתי טבעת
+                </button>
+
+
+                <button
+                    id="sheet-temporary-out-button"
+                    class="sheet-secondary-action"
+                >
+                    ↔ הטבעת הייתה בחוץ זמנית
+                </button>
+
+
+                <details
+                    id="ring-custom-time"
+                    class="sheet-time-details"
+                >
+
+                    <summary>
+                        רישום לתאריך או שעה אחרים
+                    </summary>
+
+
+                    <input
+                        id="ring-action-datetime"
+                        type="datetime-local"
+                        aria-label="תאריך ושעת פעולת טבעת"
+                    >
+
+                </details>
+
+            </div>
+
+
+
+            <!-- אחרי הוצאה -->
+
+            <div
+                id="after-removal-options"
+                class="sheet-subview"
+                hidden
+            >
+
+                <p class="sheet-question">
+                    מה קורה אחרי ההוצאה?
+                </p>
+
+
+                <button
+                    id="start-break-button"
+                    class="sheet-primary-action"
+                >
+                    מתחילה שבוע הפסקה
+                </button>
+
+
+                <button
+                    id="immediate-replacement-button"
+                    class="sheet-secondary-action"
+                >
+                    💍 מכניסה טבעת חדשה מיד
+                </button>
+
+
+                <button
+                    id="cancel-removal-button"
+                    class="sheet-text-button"
+                >
+                    חזרה
+                </button>
+
+            </div>
+
+
+
+            <!-- הוצאה זמנית -->
+
+            <div
+                id="temporary-out-form"
+                class="sheet-subview"
+                hidden
+            >
+
+                <p class="sheet-question">
+                    מתי הטבעת הייתה בחוץ?
+                </p>
+
+
+                <label
+                    class="sheet-field"
+                    for="temporary-out-start"
+                >
+                    <span>
+                        יצאה
+                    </span>
+                </label>
+
+
+                <input
+                    id="temporary-out-start"
+                    class="sheet-field-input"
+                    type="datetime-local"
+                >
+
+
+                <label
+                    class="sheet-field"
+                    for="temporary-out-end"
+                >
+                    <span>
+                        הוחזרה
+                    </span>
+                </label>
+
+
+                <input
+                    id="temporary-out-end"
+                    class="sheet-field-input"
+                    type="datetime-local"
+                >
+
+
+                <button
+                    id="save-temporary-out-button"
+                    class="sheet-primary-action"
+                >
+                    שמירה
+                </button>
+
+
+                <button
+                    id="cancel-temporary-out-button"
+                    class="sheet-text-button"
+                >
+                    חזרה
+                </button>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- דימום -->
+
+        <div
+            id="bleeding-sheet"
+            class="sheet-content"
+            hidden
+        >
+
+            <button
+                id="sheet-bleeding-start-button"
+                class="sheet-primary-action"
+            >
+                🩸 התחיל דימום
+            </button>
+
+
+            <button
+                id="sheet-bleeding-end-button"
+                class="sheet-primary-action"
+            >
+                ✓ הסתיים דימום
+            </button>
+
+
+            <p
+                id="bleeding-sheet-status"
+                class="sheet-status-text"
+            ></p>
+
+
+            <details
+                id="bleeding-custom-time"
+                class="sheet-time-details"
+            >
+
+                <summary>
+                    רישום לתאריך או שעה אחרים
+                </summary>
+
+
+                <input
+                    id="bleeding-action-datetime"
+                    type="datetime-local"
+                    aria-label="תאריך ושעת דימום"
+                >
+
+            </details>
+
+        </div>
+
+    </section>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
